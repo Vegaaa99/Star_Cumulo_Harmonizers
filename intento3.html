@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartCumulo Harmonizers</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #00275b;
+            color: white;
+            text-align: center;
+        }
+        header {
+            background-color: #00275b;
+            padding: 20px;
+        }
+        h1, h2 {
+            margin: 0;
+        }
+        section {
+            padding: 50px;
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: background-color 0.5s ease;
+        }
+        .slide {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #f4b400;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #d39200;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: #00275b;
+            padding: 10px 0;
+        }
+        nav button {
+            margin: 0 15px;
+        }
+        .image-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .image-section img {
+            width: 150px;
+            height: 150px;
+        }
+        .image-container img {
+            width: 300px;
+            height: 300px;
+        }
+        .audio-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .author {
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        .image-credits {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>StartCumulo Harmonizers</h1>
+    <h2>Nasa Space Challenge 2024</h2>
+</header>
+
+<nav>
+    <button onclick="showSlide(0)">Inicio</button>
+    <button onclick="showSlide(1)">Feel the space with music</button>
+    <button onclick="showSlide(2)">About the space</button>
+    <button onclick="showSlide(3)">About Us</button>
+</nav>
+
+<section>
+    <!-- Diapositiva 1: Página inicial -->
+    <div class="slide active" id="slide-0">
+        <h2>Creative space through art, music, videography, and feelings</h2>
+        <p>Proyecto exploratorio inspirado en las imágenes del telescopio James Webb.</p>
+    </div>
+
+    <!-- Diapositiva 2: Feel the space with music -->
+    <div class="slide" id="slide-1">
+        <h2>Feel the space with music</h2>
+        <p>En este caso, exploraremos a nivel científico a partir de el color de los cuerpos celestes y con esto te llevaremos a una experiencia musical con ellos. Puedes escoger entre varias composiciones creadas por nuestro grupo, esperamos lo disfrutes.</p>
+        
+        <div class="image-section">
+            <div>
+                <button onclick="showSlide(4)">Naranja</button>
+            </div>
+            <div>
+                <button onclick="showSlide(5)">Azul</button>
+            </div>
+            <div>
+                <button onclick="showSlide(6)">Verde</button>
+            </div>
+            <div>
+                <button onclick="showSlide(7)">Multicolor</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diapositiva 3: About the space (corregido) -->
+    <div class="slide" id="slide-2">
+        <h2>About the space</h2>
+        <p>Ya pasaste por una experiencia sensorial que revolvió tus sentimientos y te acercó mucho más a la ciencia detrás de esto. ¿No te gustaría aprender un poco más? Tenemos estas opciones que sabemos que te encantarán:</p>
+        
+        <!-- Sección de imágenes -->
+        <div class="image-section">
+            <div>
+                <img src="image1.jpg" alt="Imagen 1">
+            </div>
+            <div>
+                <img src="image2.jpg" alt="Imagen 2">
+            </div>
+            <div>
+                <img src="image3.jpg" alt="Imagen 3">
+            </div>
+            <div>
+                <img src="image4.jpg" alt="Imagen 4">
+            </div>
+        </div>
+    </div>
+
+    <!-- Diapositiva 4: About Us -->
+    <div class="slide" id="slide-3">
+        <h2>About Us</h2>
+        <div class="about-us-section">
+            <img src="luna.jpg" alt="Luna Márquez">
+            <div>
+                <strong>Luna Márquez</strong><br>
+                Rol:Lider, programadora.
+              Estudio Matemáticas Aplicadas y Ciencias de la Computación, desde muy pequeña me ha gustado la astronomía, también fanática del arte de medio tiempo.
+            </div>
+        </div>
+        <div class="about-us-section">
+            <img src="camilo.jpg" alt="Camilo">
+            <div>
+                <strong>Camilo Rojas</strong><br>
+                Rol: Compositor.
+            </div>
+        </div>
+        <div class="about-us-section">
+            <img src="hernan.jpg" alt="Hernan">
+            <div>
+                <strong>Hernan Munar</strong><br>
+                Rol: Compositor.
+            </div>
+        </div>
+        <div class="about-us-section">
+            <img src="Laura.jpg" alt="Laura">
+            <div>
+                <strong>Laura Alfonso</strong><br>
+                Rol:
+        <div class="about-us-section">
+            <img src="Valentina.jpg" alt="Valentina">
+            <div>
+                <strong>Valentina Vega</strong><br>
+                Rol:
+        <div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diapositivas para los colores -->
+    <div class="slide" id="slide-4">
+        <div class="image-container">
+            <img src="naranja.jpg" alt="Imagen Naranja">
+        </div>
+        <div class="audio-section">
+            <audio controls>
+                <source src="audio1.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <audio controls>
+                <source src="audio2.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+        <p class="author">Autor: Camilo Rojas</p>
+        <p class="image-credits">Imagen extraída de bla bla y es una bla bla.</p>
+    </div>
+
+    <div class="slide" id="slide-5">
+        <div class="image-container">
+            <img src="azul.jpg" alt="Imagen Azul">
+        </div>
+        <div class="audio-section">
+            <audio controls>
+                <source src="audio1.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <audio controls>
+                <source src="audio2.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+        <p class="author">Autor: Camilo Rojas</p>
+        <p class="image-credits">Imagen extraída de bla bla y es una bla bla.</p>
+    </div>
+
+    <div class="slide" id="slide-6">
+        <div class="image-container">
+            <img src="verde.jpg" alt="Imagen Verde">
+        </div>
+        <div class="audio-section">
+            <audio controls>
+                <source src="audio1.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <audio controls>
+                <source src="audio2.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+        <p class="author">Autor: Camilo Rojas</p>
+        <p class="image-credits">Imagen extraída de bla bla y es una bla bla.</p>
+    </div>
+
+    <div class="slide" id="slide-7">
+        <div class="image-container">
+            <img src="multicolor.jpg" alt="Imagen Multicolor">
+        </div>
+        <div class="audio-section">
+            <audio controls>
+                <source src="audio1.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+            <audio controls>
+                <source src="audio2.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+            </audio>
+        </div>
+        <p class="author">Autor: Camilo Rojas</p>
+        <p class="image-credits">Imagen extraída de bla bla y es una bla bla.</p>
+    </div>
+</section>
+  
+<script>
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+    }
+</script>
+  
+</body>
+</html>

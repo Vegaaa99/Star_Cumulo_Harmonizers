@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="progress-bar-container">
+          <div class="close-button">
+            <img src="./assets/close.svg" />
+          </div>
+          <div class="progress-bar">
+            <div class="progress"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="board">
+          <h1 class="board-header">Do you know?</h1>
+          <div class="target-lang-container">
+            <img class="avatar-img" src="./assets/lara-woman.svg" />
+            <div class="speech-bubble">
+              <div class="sent-container">
+                <img id="speaker" src="/assets/speaker.svg" />
+              </div>
+            </div>
+          </div>
+          <div class="answer-field"></div>
+          <div class="random-words-field">
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer-items-container">
+          <div class="item left">
+            <button>skip</button>
+          </div>
+          <div class="item"></div>
+          <div class="item center">
+            <img src="./assets/keyboard.svg" />
+            <span>use keyboard</span>
+          </div>
+          <div class="item"></div>
+          <div class="item right">
+            <button class="check-button">check</button>
+          </div>
+        </div>
+      </div>
+      <div class="win-footer">
+        <div class="footer-items-container">
+          <div class="item left">
+            <div class="sign-container">
+              <img src="https://stsci-opo.org/STScI-01HHFPRC79EM3SKWSBXNVKBXTG.png"/>
+            </div>
+            <div class="desc-container">
+              <span class="motivational-word">Great Job</span>
+              <span class="report">REPORT</span>
+            </div>
+            
+          </div>
+          <div class="item"></div>
+          <div class="item center">
+          </div>
+          <div class="item"></div>
+          <div class="item right">
+            <button class="continue-button">continue</button>
+          </div>
+        </div>
+      </div>
+      <div class="lose-footer">
+        <div class="footer-items-container">
+          <div class="item left">
+            <div class="sign-container">
+              <img src="https://stsci-opo.org/STScI-01HHFPRC79EM3SKWSBXNVKBXTG.png"/>
+            </div>
+            <div class="desc-container">
+              <span class="motivational-word">Correct solution</span>
+              <span class="report">REPORT</span>
+            </div>
+            
+          </div>
+          <div class="item"></div>
+          <div class="item center">
+          </div>
+          <div class="item"></div>
+          <div class="item right">
+            <button class="continue-button-fail">continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="./data.js"></script>
+  <script src="./main.js"></script>
+</html>

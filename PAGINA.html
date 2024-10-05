@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartCumulo Harmonizers</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #00275b;
+            color: white;
+            text-align: center;
+        }
+        header {
+            background-color: #00275b;
+            padding: 20px;
+        }
+        h1, h2 {
+            margin: 0;
+        }
+        section {
+            padding: 50px;
+            min-height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: background-color 0.5s ease;
+        }
+        .slide {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .active {
+            display: block;
+            opacity: 1;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #f4b400;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #d39200;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>StartCumulo Harmonizers</h1>
+    <h2>Nasa Space Challenge 2024</h2>
+</header>
+
+<nav>
+    <button onclick="showSlide(0)">Inicio</button>
+    <button onclick="showSlide(1)">Feel the space with music</button>
+    <button onclick="showSlide(4)">About the space</button>
+</nav>
+
+<section>
+    <div class="slide active" id="slide-0">
+        <h2>Creative space through art, music, videography, and feelings</h2>
+        <p>Proyecto exploratorio inspirado en las imágenes del telescopio James Webb.</p>
+    </div>
+
+    <div class="slide" id="slide-1">
+        <h2>Feel the space with music</h2>
+        <p>Explora la ciencia a través de composiciones personales y populares inspiradas en el espacio.</p>
+        <button onclick="showSlide(2)">Random Way</button>
+    </div>
+
+    <div class="slide" id="slide-2">
+        <h2>Distribución científica</h2>
+        <p>Azules, Rojas, Blancas, Verdes... cada emoción resuena en el espacio.</p>
+        <button onclick="showSlide(3)">Continuar</button>
+    </div>
+
+    <div class="slide" id="slide-3">
+        <h2>Luminosidad y texturas</h2>
+        <p>Una experiencia inmersiva llena de imágenes y sensaciones.</p>
+        <button onclick="showSlide(0)">Volver al inicio</button>
+    </div>
+
+    <div class="slide" id="slide-4">
+        <h2>About the space</h2>
+        <p>Este espacio creativo combina arte, música, y ciencia para conectarte con el cosmos.</p>
+        <button onclick="showSlide(0)">Volver al inicio</button>
+    </div>
+</section>
+
+<script>
+    function showSlide(index) {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+    }
+</script>
+<body>
+    <audio controls>
+        <source src="pista1.wav">
+    </audio>
+</body>
+</body>
+</html>
