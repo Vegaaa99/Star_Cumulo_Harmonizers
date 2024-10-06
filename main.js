@@ -25,11 +25,9 @@ window.addEventListener('load', function () {
   speakerEl.setAttribute('id', 'speaker');
   speakerEl.src = './assets/speaker.svg';
 
-
   const tts = window.speechSynthesis;
   let incr = 0;
   let randomWordsArr = [];
-  let randomWordsArrDom = [];
   let answerFieldWordsArr = [];
   let answerArr = [];
   let progressStart = 0;
@@ -37,11 +35,6 @@ window.addEventListener('load', function () {
   const widthHeightArr = [];
   let index = 0;
   let sound = null;
-  //let answerWordsArrIsFull = false;
-
-  // console.log('random words arr', randomWordsArr)
-
-
 
   const randomWordsCreator = () => {
     randomWordsArr = []; // Clear previous random words
@@ -90,16 +83,12 @@ window.addEventListener('load', function () {
       widthHeightArr[index] = [childHeight, childWidth];
     });
   };
-  
 
   randomWordsCreator();
 
-  //console.log(randomWordsArr,randomWordsArrDom,answerFieldWordsArr);
-
-  //function to push target into answer and changing eventlistner
+  // Function to push target into answer and changing event listener
   function pushIntoAnswer(e) {
     index = e.target.id;
-    //console.log(e.target);
     answerFieldWordsArr.push(e.target);
     if (answerFieldWordsArr.length > 0) {
       checkButton.disabled = false;
@@ -108,7 +97,6 @@ window.addEventListener('load', function () {
     }
     answerField.appendChild(e.target);
     randomWordsArr[index] = "";
-    //console.log(e.target);
     e.target.removeEventListener('click', pushIntoAnswer);
     e.target.classList.remove('word');
     e.target.classList.add('added');
@@ -117,7 +105,7 @@ window.addEventListener('load', function () {
     e.target.addEventListener('click', removingElement);
   }
 
-  //function to push answer into random array and changing eventlistner
+  // Function to push answer into random array and changing event listener
   function removingElement(e) {
     let index = e.target.id;
     let parentDiv = randomWordsField.children[index];
@@ -138,14 +126,14 @@ window.addEventListener('load', function () {
     e.target.addEventListener('click', pushIntoAnswer);
   }
 
-  //map random array and add eventlister
+  // Map random array and add event listener
   let arr = Array.from(randomWordsField.children);
   let childArr = arr.map((arr) => arr.children[0]);
   childArr.forEach(w => {
     w.addEventListener('click', pushIntoAnswer);
   });
 
-  //map answer array and add eventlistener
+  // Map answer array and add event listener
   answerFieldWordsArr = Array.from(answerField.children);
   answerFieldWordsArr.map(w => {
     w.addEventListener('click', removingElement);
@@ -156,8 +144,6 @@ window.addEventListener('load', function () {
 
     // While there remain elements to shuffle...
     while (0 !== currentIndex) {
-
-      // Pick a remaining element...
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
 
@@ -174,65 +160,33 @@ window.addEventListener('load', function () {
   };
 
   const iterateEachWord = (i) => {
-  const questions = [...data];
+    const questions = [...data];
 
-  // Set avatar image
-  if (questions[i].pic) {
-    avatarImg.src = questions[i].pic;
-  }
+    // Set avatar image
+    if (questions[i].pic) {
+      avatarImg.src = questions[i].pic;
+    }
 
-  sentContainer.appendChild(speakerEl);
+    sentContainer.appendChild(speakerEl);
 
-  // Create a question element and display it
-  const questionText = document.createElement('p');
-  questionText.innerText = questions[i].question; // Display the question text
-  questionText.className = 'question-text';
-  sentContainer.appendChild(questionText);
+    // Create a question element and display it
+    const questionText = document.createElement('p');
+    questionText.innerText = questions[i].question; // Display the question text
+    questionText.className = 'question-text';
+    sentContainer.appendChild(questionText);
 
-  // If the current question has options (for multiple choice)
-  if (questions[i].options) {
-    questions[i].options.forEach((option) => {
-      const optionButton = document.createElement('button');
-      optionButton.innerText = option;
-      optionButton.className = 'option-button';
-      optionButton.setAttribute('data-answer', option); // Store the option value
-      optionButton.addEventListener('click', () => {
-        checkMultipleChoiceAnswer(option);
+    // Display random words if they exist for the question
+    if (Array.isArray(questions[i].phraseByWord)) {
+      questions[i].phraseByWord.forEach((word) => {
+        let wordEl = document.createElement('button');
+        wordEl.innerText = word; // Directly display the string word
+        wordEl.className = 'word-item';
+        sentContainer.appendChild(wordEl);
       });
-      sentContainer.appendChild(optionButton); // Append below the question
-    });
-  } else if (Array.isArray(questions[i].phraseByWord)) {
-    // Handle displaying words for other questions
-    questions[i].phraseByWord.forEach((word) => {
-      let wordEl = document.createElement('button');
-      wordEl.innerText = word; // Directly display the string word
-      wordEl.className = 'word-item';
-      sentContainer.appendChild(wordEl);
-    });
-  }
-};
+    }
+  };
 
   iterateEachWord(incr);
-
-  // Function to check the answer for multiple-choice questions
-const checkMultipleChoiceAnswer = (selectedOption) => {
-  const correctAnswer = data[incr].answer;
-  if (selectedOption === correctAnswer) {
-    // Handle correct answer logic
-    sound = new Audio('https://res.cloudinary.com/nzmai/video/upload/v1605697967/lvlupsound_n13hts.mp3');
-    sound.play();
-    progressStart += progressRange;
-    footer.style.display = 'none';
-    winFooter.style.display = 'flex';
-    progress.style.width = progressStart + '%';
-  } else {
-    // Handle incorrect answer logic
-    sound = new Audio('https://res.cloudinary.com/nzmai/video/upload/v1605698209/errorsound_jxtmqg.mp3');
-    sound.play();
-    footer.style.display = 'none';
-    loseFooter.style.display = 'flex';
-  }
-};
 
   // Check answers 
   const checkAnswer = () => {
@@ -241,7 +195,7 @@ const checkMultipleChoiceAnswer = (selectedOption) => {
       answerArr.push(val);
     });
     let ansStr = answerArr.join(' ');
-  
+
     if (ansStr === data[incr].engPhrase || ansStr === data[incr].answer) {
       sound = new Audio('https://res.cloudinary.com/nzmai/video/upload/v1605697967/lvlupsound_n13hts.mp3');
       sound.play();
@@ -256,20 +210,15 @@ const checkMultipleChoiceAnswer = (selectedOption) => {
       loseFooter.style.display = 'flex';
     }
   };
-  
-  // attach event listener to check button
+
+  // Attach event listener to check button
   checkButton.addEventListener('click', checkAnswer);
 
   const getNewQuestion = (i) => {
     const questions = [...data];
-    //console.log(questions[i])
     avatarImg.src = questions[i].pic;
     resetQuestion();
     iterateEachWord(i);
-    const wordItems = document.querySelectorAll('.word-item');
-    wordItems.forEach(wordItem => wordItem.addEventListener('mouseover', (e) => {
-      speak(e.target.value, 'fr-FR');
-    }));
   };
 
   getNewQuestion(incr);
@@ -283,8 +232,6 @@ const checkMultipleChoiceAnswer = (selectedOption) => {
   speakerEl.addEventListener('click', () => {
     speak(data[incr].frPhrase, 'fr-FR');
   });
-
-  //console.log(wordItems)
 
   continueButton.addEventListener('click', () => {
     incr += 1;
@@ -311,15 +258,4 @@ const checkMultipleChoiceAnswer = (selectedOption) => {
     checkButton.classList.add('disabledCheckButton');
     checkButton.classList.remove('enabled-check-button');
   });
-
-  /* window.addEventListener('keydown', (key) => {
-    if (key.keyCode == "39") {
-      incr += 1;
-      getNewQuestion(incr);
-    }
-    if (key.keyCode == "37") {
-      incr -= 1;
-      getNewQuestion(incr);
-    }
-  }); */
 });
