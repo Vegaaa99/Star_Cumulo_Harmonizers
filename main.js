@@ -44,44 +44,53 @@ window.addEventListener('load', function () {
 
 
   const randomWordsCreator = () => {
-    data.map((obj) => {
-      splittedStr = obj.engPhrase.split(" ");
-      copy_array = randomWordsArr;
-      return randomWordsArr.push(...splittedStr);
-    });
-
-    shuffle(randomWordsArr).map((randWord) => {
-      //placeholder
-      const parent_button = document.createElement('div');
-      parent_button.className = 'placeholder';
-      parent_button.id = index;
-
-
-      //random word
-      randomWordsField.appendChild(parent_button);
-      const button_element = document.createElement('button');
-
-      button_element.textContent = randWord;
-      button_element.className = 'word';
-      button_element.id = index;
-      button_element.setAttribute('value', randWord);
-
-      var current_placeholder = document.getElementById(index);
-      current_placeholder.appendChild(button_element);
-
-      //setting height and width of parent element equal to child element
-      var childHeight = button_element.offsetHeight * 1.5;
-      var childWidth = button_element.offsetWidth * 1.5;
-      parent_button.style.height = childHeight + "px";
-      parent_button.style.width = childWidth + "px";
+    randomWordsArr = []; // Clear previous random words
+  
+    // If it's the first question, use the specified words
+    if (incr === 0) { // Check if it's the first question
+      const firstQuestionWords = data[0].phraseByWord; // Get words from the first question
+      randomWordsArr.push(...firstQuestionWords); // Add these specific words
+    } else {
+      // For other questions, gather words from the remaining data
+      data.forEach((obj) => {
+        if (Array.isArray(obj.phraseByWord)) {
+          obj.phraseByWord.forEach(item => {
+            if (typeof item === 'string') {
+              randomWordsArr.push(item);
+            } else if (item.word) {
+              randomWordsArr.push(item.word);
+            }
+          });
+        } else if (obj.trans && Array.isArray(obj.trans)) {
+          randomWordsArr.push(...obj.trans);
+        }
+      });
+    }
+  
+    // Shuffle the random words array
+    shuffle(randomWordsArr).forEach((randWord, index) => {
+      const parentDiv = document.createElement('div');
+      parentDiv.className = 'placeholder';
+      parentDiv.id = index;
+  
+      const wordButton = document.createElement('button');
+      wordButton.textContent = randWord; // Display the shuffled word
+      wordButton.className = 'word';
+      wordButton.id = index;
+      wordButton.setAttribute('value', randWord);
+  
+      parentDiv.appendChild(wordButton);
+      randomWordsField.appendChild(parentDiv);
+  
+      const childHeight = wordButton.offsetHeight * 1.5;
+      const childWidth = wordButton.offsetWidth * 1.5;
+      parentDiv.style.height = `${childHeight}px`;
+      parentDiv.style.width = `${childWidth}px`;
+  
       widthHeightArr[index] = [childHeight, childWidth];
-      index++;
-    });
-
-    randomWordsArrDom.forEach(w => {
-      randomWordsField.appendChild(w);
     });
   };
+  
 
   randomWordsCreator();
 
@@ -165,33 +174,75 @@ window.addEventListener('load', function () {
   };
 
   const iterateEachWord = (i) => {
-    const questions = [...data];
-    //console.log(questions[i])
-    avatarImg.src = questions[i].pic;
-    sentContainer.appendChild(speakerEl);
-    questions[i].phraseByWord.map((word) => {
-      let wordEl = document.createElement('button');
-      wordEl.innerText = word.word;
-      wordEl.setAttribute('class', 'word-item');
-      if (word.highlighted) {
-        wordEl.setAttribute('class', 'word-item highlighted');
-      }
+  const questions = [...data];
 
+  // Set avatar image
+  if (questions[i].pic) {
+    avatarImg.src = questions[i].pic;
+  }
+
+  sentContainer.appendChild(speakerEl);
+
+  // Create a question element and display it
+  const questionText = document.createElement('p');
+  questionText.innerText = questions[i].question; // Display the question text
+  questionText.className = 'question-text';
+  sentContainer.appendChild(questionText);
+
+  // If the current question has options (for multiple choice)
+  if (questions[i].options) {
+    questions[i].options.forEach((option) => {
+      const optionButton = document.createElement('button');
+      optionButton.innerText = option;
+      optionButton.className = 'option-button';
+      optionButton.setAttribute('data-answer', option); // Store the option value
+      optionButton.addEventListener('click', () => {
+        checkMultipleChoiceAnswer(option);
+      });
+      sentContainer.appendChild(optionButton); // Append below the question
     });
-  };
+  } else if (Array.isArray(questions[i].phraseByWord)) {
+    // Handle displaying words for other questions
+    questions[i].phraseByWord.forEach((word) => {
+      let wordEl = document.createElement('button');
+      wordEl.innerText = word; // Directly display the string word
+      wordEl.className = 'word-item';
+      sentContainer.appendChild(wordEl);
+    });
+  }
+};
 
   iterateEachWord(incr);
 
+  // Function to check the answer for multiple-choice questions
+const checkMultipleChoiceAnswer = (selectedOption) => {
+  const correctAnswer = data[incr].answer;
+  if (selectedOption === correctAnswer) {
+    // Handle correct answer logic
+    sound = new Audio('https://res.cloudinary.com/nzmai/video/upload/v1605697967/lvlupsound_n13hts.mp3');
+    sound.play();
+    progressStart += progressRange;
+    footer.style.display = 'none';
+    winFooter.style.display = 'flex';
+    progress.style.width = progressStart + '%';
+  } else {
+    // Handle incorrect answer logic
+    sound = new Audio('https://res.cloudinary.com/nzmai/video/upload/v1605698209/errorsound_jxtmqg.mp3');
+    sound.play();
+    footer.style.display = 'none';
+    loseFooter.style.display = 'flex';
+  }
+};
+
   // Check answers 
   const checkAnswer = () => {
-    //console.log(answerArr);
     answerFieldWordsArr.forEach((item) => {
       let val = item.value;
       answerArr.push(val);
     });
     let ansStr = answerArr.join(' ');
-    if (ansStr === data[incr].engPhrase) {
-      //console.log('correct');
+  
+    if (ansStr === data[incr].engPhrase || ansStr === data[incr].answer) {
       sound = new Audio('https://res.cloudinary.com/nzmai/video/upload/v1605697967/lvlupsound_n13hts.mp3');
       sound.play();
       progressStart += progressRange;
@@ -199,14 +250,13 @@ window.addEventListener('load', function () {
       winFooter.style.display = 'flex';
       progress.style.width = progressStart + '%';
     } else {
-      //console.log('false');
       sound = new Audio('https://res.cloudinary.com/nzmai/video/upload/v1605698209/errorsound_jxtmqg.mp3');
       sound.play();
       footer.style.display = 'none';
       loseFooter.style.display = 'flex';
     }
   };
-
+  
   // attach event listener to check button
   checkButton.addEventListener('click', checkAnswer);
 
